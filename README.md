@@ -1,0 +1,1 @@
+# wp-firebase-push-notification
