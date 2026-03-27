@@ -2,8 +2,8 @@
 /*
 Plugin Name: Firebase Push Notification
 Description: Firebase Push Notification
-Version:3.2
-Author:sony7596, miraclewebssoft, reach.baljit
+Version:3.2.1
+Author:miraclewebssoft, deep7197
 Author URI:http://www.miraclewebsoft.com
 License:GPL2
 License URI:https://www.gnu.org/licenses/gpl-2.0.html
@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-if (!defined("FCM_VERSION_CURRENT")) define("FCM_VERSION_CURRENT", '1');
+if (!defined("FCM_VERSION_CURRENT")) define("FCM_VERSION_CURRENT", '3.2.1');
 if (!defined("FCM_URL")) define("FCM_URL", plugin_dir_url( __FILE__ ) );
 if (!defined("FCM_PLUGIN_DIR")) define("FCM_PLUGIN_DIR", plugin_dir_path(__FILE__));
 if (!defined("FCM_PLUGIN_NM")) define("FCM_PLUGIN_NM", 'Firebase Push Notification');

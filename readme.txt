@@ -1,5 +1,5 @@
 === Firebase Push Notification ===
-Contributors:sony7596, miraclewebssoft, reachbaljit
+Contributors: miraclewebssoft, deep7197
 Tags: Firebase cloud messaging, FCM, push notifications, android, ios
 Donate link: https://www.paypal.me/KaramSingh
 Requires at least:3.6
@@ -47,7 +47,12 @@ Now goto Firebase Push Notification under Settings in admin menu
 == Screenshots ==
 
 == Changelog ==
-= 3.1 |19/05/2018 =
+= 3.2.1 =
+
+* Fix Security Issues
+* Tested up to 6.9
+
+= 3.1 =
 
 * Fix the notification for new post and update post
 
