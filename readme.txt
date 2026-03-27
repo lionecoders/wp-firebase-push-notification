@@ -1,9 +1,9 @@
-﻿=== Firebase Push Notification ===
+=== Firebase Push Notification ===
 Contributors:sony7596, miraclewebssoft, reachbaljit
-Tags: Firebase cloud messsaging, FCM, Firebase cloud messsaging for Adroid, Firebase cloud messsaging for IOS, Firebase cloud messsaging on Post save,Firebase cloud messsaging on page save, FCM push Notification 
+Tags: Firebase cloud messaging, FCM, push notifications, android, ios
 Donate link: https://www.paypal.me/KaramSingh
 Requires at least:3.6
-Tested up to:4.9
+Tested up to: 6.9
 Stable tag:3.2
 License:GPL2
 License URI:https://www.gnu.org/licenses/gpl-2.0.html
@@ -25,7 +25,7 @@ Firebase cloud messsaging(FCM) for Android and IOS on post save, post update, pa
 
 **How to use Plugin:-**
 
-* After install goto Firebase Push Notification under Settings in wordpress admin menu
+* After install goto Firebase Push Notification under Settings in WP admin menu
 * Enter Google firebase api key to field given.
 * Setup any topic in mobile application and same token put in option given.
 * Disable notification for post or page if needed.
@@ -40,7 +40,7 @@ Download the plugin .zip file
 
 Login in to admin Click Plugins -> Add New -> Upload
 
-Find wp-firebase-push-notification Wordpress Plugin in plugin list and activate it.
+Find Firebase Push Notification Plugin in plugin list and activate it.
 
 Now goto Firebase Push Notification under Settings in admin menu
 

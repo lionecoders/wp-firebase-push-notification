@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name:Wordpress Firebase Push Notification
-Description:Wordpress Firebase Push Notification
+Plugin Name: Firebase Push Notification
+Description: Firebase Push Notification
 Version:3.2
 Author:sony7596, miraclewebssoft, reach.baljit
 Author URI:http://www.miraclewebsoft.com
@@ -15,8 +15,8 @@ if (!defined('ABSPATH')) {
 if (!defined("FCM_VERSION_CURRENT")) define("FCM_VERSION_CURRENT", '1');
 if (!defined("FCM_URL")) define("FCM_URL", plugin_dir_url( __FILE__ ) );
 if (!defined("FCM_PLUGIN_DIR")) define("FCM_PLUGIN_DIR", plugin_dir_path(__FILE__));
-if (!defined("FCM_PLUGIN_NM")) define("FCM_PLUGIN_NM", 'Wordpress Firebase Push Notification');
-if (!defined("FCM_TD")) define("FCM_TD", 'fcm_td');
+if (!defined("FCM_PLUGIN_NM")) define("FCM_PLUGIN_NM", 'Firebase Push Notification');
+if (!defined("FCM_TD")) define("FCM_TD", 'wp-firebase-push-notification');
 
 
 Class Firebase_Push_Notification
@@ -39,10 +39,10 @@ Class Firebase_Push_Notification
 
     public function fcm_setup_admin_menu()
     {
-        add_submenu_page('options-general.php', __('Firebase Push Notification', FCM_TD), FCM_PLUGIN_NM, 'manage_options', 'fcm_slug', array($this, 'fcm_admin_page'));
+        add_submenu_page('options-general.php', __('Firebase Push Notification', 'wp-firebase-push-notification'), 'Firebase Push Notification', 'manage_options', 'fcm_slug', array($this, 'fcm_admin_page'));
 
         add_submenu_page(null            // -> Set to null - will hide menu link
-            , __('Test Notification', FCM_TD)// -> Page Title
+            , __('Test Notification', 'wp-firebase-push-notification')// -> Page Title
             , 'Test Notification'    // -> Title that would otherwise appear in the menu
             , 'administrator' // -> Capability level
             , 'test_notification'   // -> Still accessible via admin.php?page=menu_handle
@@ -58,12 +58,12 @@ Class Firebase_Push_Notification
     function fcm_backend_plugin_js_scripts_filter_table()
     {
         wp_enqueue_script("jquery");
-        wp_enqueue_script("fcm.js", FCM_URL . "assets/js/fcm.js");
+        wp_enqueue_script("fcm.js", FCM_URL . "assets/js/fcm.js", array('jquery'), FCM_VERSION_CURRENT, true);
     }
 
     function fcm_backend_plugin_css_scripts_filter_table()
     {
-        wp_enqueue_style("fcm.css", FCM_URL . "assets/css/fcm.css");
+        wp_enqueue_style("fcm.css", FCM_URL . "assets/css/fcm.css", array(), FCM_VERSION_CURRENT);
     }
 
     public function fcm_activate()
@@ -78,13 +78,13 @@ Class Firebase_Push_Notification
 
     function fcm_settings()
     {    //register our settings
-        register_setting('fcm_group', 'stf_fcm_api');
-        register_setting('fcm_group', 'fcm_option');
-        register_setting('fcm_group', 'fcm_topic');
-        register_setting('fcm_group', 'fcm_disable');
-        register_setting('fcm_group', 'fcm_update_disable');
-        register_setting('fcm_group', 'fcm_page_disable');
-        register_setting('fcm_group', 'fcm_update_page_disable');
+        register_setting('fcm_group', 'stf_fcm_api', array('sanitize_callback' => 'sanitize_text_field'));
+        register_setting('fcm_group', 'fcm_option', array('sanitize_callback' => 'sanitize_text_field'));
+        register_setting('fcm_group', 'fcm_topic', array('sanitize_callback' => 'sanitize_text_field'));
+        register_setting('fcm_group', 'fcm_disable', array('sanitize_callback' => 'sanitize_text_field'));
+        register_setting('fcm_group', 'fcm_update_disable', array('sanitize_callback' => 'sanitize_text_field'));
+        register_setting('fcm_group', 'fcm_page_disable', array('sanitize_callback' => 'sanitize_text_field'));
+        register_setting('fcm_group', 'fcm_update_page_disable', array('sanitize_callback' => 'sanitize_text_field'));
 
     }
 
@@ -93,8 +93,8 @@ Class Firebase_Push_Notification
         register_post_type('device_tokens',
             [
                 'labels'      => [
-                    'name'          => __('Device Tokens'),
-                    'singular_name' => __('Device Token'),
+                    'name'          => __('Device Tokens', 'wp-firebase-push-notification'),
+                    'singular_name' => __('Device Token', 'wp-firebase-push-notification'),
                 ],
                 'public'      => true,
                 'has_archive' => true,
@@ -148,11 +148,11 @@ Class Firebase_Push_Notification
         echo '<div><h2>Debug Information</h2>';
 
         echo '<pre>';
-        printf($result);
+        printf( '%s', esc_html( $result ) );
         echo '</pre>';
 
-        echo '<p><a href="'. admin_url('admin.php').'?page=test_notification">Retry</a></p>';
-        echo '<p><a href="'. admin_url('admin.php').'?page=fcm_slug">Home</a></p>';
+        echo '<p><a href="'. esc_url( admin_url('admin.php') ) .'?page=test_notification">Retry</a></p>';
+        echo '<p><a href="'. esc_url( admin_url('admin.php') ) .'?page=fcm_slug">Home</a></p>';
 
         echo '</div>';
     }
@@ -163,8 +163,8 @@ Class Firebase_Push_Notification
         $apiKey = get_option('stf_fcm_api');
         $url = 'https://fcm.googleapis.com/fcm/send';
         $headers = array(
-            'Authorization: key=' . $apiKey,
-            'Content-Type: application/json'
+            'Authorization' => 'key=' . $apiKey,
+            'Content-Type'  => 'application/json'
         );
         $notification_data = array(    //// when application open then post field 'data' parameter work so 'message' and 'body' key should have same text or value
             'message'           => $content
@@ -184,33 +184,23 @@ Class Firebase_Push_Notification
         );
         //echo '<pre>';
         //var_dump($post);
-        // Initialize curl handle
-        $ch = curl_init();
+        // Replace cURL with WP HTTP API
+        $response = wp_remote_post( $url, array(
+            'method'      => 'POST',
+            'timeout'     => 45,
+            'redirection' => 5,
+            'httpversion' => '1.0',
+            'blocking'    => true,
+            'headers'     => $headers,
+            'body'        => json_encode( $post ),
+            'cookies'     => array(),
+        ) );
 
-        // Set URL to GCM endpoint
-        curl_setopt($ch, CURLOPT_URL, $url);
+        if ( is_wp_error( $response ) ) {
+            return $response->get_error_message();
+        }
 
-        // Set request method to POST
-        curl_setopt($ch, CURLOPT_POST, true);
-
-        // Set our custom headers
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        // Get the response back as string instead of printing it
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // Set JSON post data
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
-
-        // Actually send the push
-        $result = curl_exec($ch);
-
-        // Close curl handle
-        curl_close($ch);
-
-        // Debug GCM response
-
-        $result_de = json_decode($result);
+        $result = wp_remote_retrieve_body( $response );
 
         return $result;
 

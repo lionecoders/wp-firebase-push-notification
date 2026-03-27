@@ -1,1 +1,1 @@
-# wp-firebase-push-notification
+# Firebase Push Notification
