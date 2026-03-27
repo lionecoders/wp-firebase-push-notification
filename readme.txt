@@ -1,4 +1,4 @@
-=== Firebase Push Notification ===
+=== Wordpress Firebase Push Notification ===
 Contributors: miraclewebssoft, deep7197
 Tags: Firebase cloud messaging, FCM, push notifications, android, ios
 Donate link: https://www.paypal.me/KaramSingh

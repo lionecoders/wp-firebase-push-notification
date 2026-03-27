@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Firebase Push Notification
+Plugin Name: Wordpress Firebase Push Notification
 Description: Firebase Push Notification
 Version:3.2.1
 Author:miraclewebssoft, deep7197
