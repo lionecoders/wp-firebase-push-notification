@@ -2,9 +2,9 @@
 Contributors: miraclewebssoft, deep7197
 Tags: Firebase cloud messaging, FCM, push notifications, android, ios
 Donate link: https://www.paypal.me/KaramSingh
-Requires at least:3.6
+Requires at least:5.0
 Tested up to: 6.9
-Stable tag:3.2
+Stable tag:3.2.1
 License:GPL2
 License URI:https://www.gnu.org/licenses/gpl-2.0.html
 
